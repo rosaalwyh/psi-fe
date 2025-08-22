@@ -87,6 +87,21 @@ const App: React.FC = () => {
     setLoading(false);
   }
 
+  function manipulateArray() {
+    const colors = ["Merah", "Kuning", "Hijau", "Pink", "Ungu", "Maroon"];
+    const apparels = ["Baju", "Celana", "Topi", "Jaket", "Sepatu"];
+    const labels = ["Diskon", "Sale", "Diskon", "Sale", "Sale"];
+
+    const result: string[] = [];
+
+    colors.forEach((color, index) => {
+      const apparel = apparels[index % apparels.length];
+      const eachStatus = labels[index % labels.length];
+      result.push(`${apparel} ${color} ${eachStatus}`);
+    });
+    return result;
+  }
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -113,9 +128,17 @@ const App: React.FC = () => {
           style={{ width: 500 }}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button shape="default" icon={<PlusOutlined />}>
-          New Data
-        </Button>
+        <Flex gap="middle">
+          <Button shape="default" icon={<PlusOutlined />}>
+            New Data
+          </Button>
+          <Button
+            onClick={() => {
+              alert(`Result: ${manipulateArray()}`);
+            }}>
+            Manipulate Array
+          </Button>
+        </Flex>
       </Flex>
       <Table<UserResponse>
         dataSource={data}
